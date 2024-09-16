@@ -1,6 +1,6 @@
 {
 Yehovah is the holly name
-Funções para criptografar e decriptografar dados epla TCP
+FunÃ§Ãµes para criptografar e decriptografar dados pela TCP
 Autor:Almir Bispo
 Data:16/09/2024
 Dependencia:nenhuma
