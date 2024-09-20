@@ -17,34 +17,44 @@ char msg[512]="";
 
 //////////////////////////////////Encripta //////////////////////////////////
 /*
- astr:texto a ser criptografado  (ate 36 bytes)
- akey:chave (ate 36 bytes)
- step: values 0x0000 ate 0xffff
+adata: message
+akey: private key
+step:integer
 */
-char *encode_node(char *astr ,char *akey ,long int step)
-{
-	int i=0;
-	for (i = 0 ;i<strlen(astr);++i )
-	{
-		enc[i]= (astr[i]) + (step << 2  + akey[i] >> 2 );
-	}
-	return (enc);
+char* encode_node(const char* adata, const char* akey, int step) {
+    int i;
+    int part;
+    size_t length = strlen(adata);
+    char* enc = (char*)malloc(length + 1);
+    enc[0] = '\0'; // Initialize the string
+
+    for (i = 0; i < length; i++) {
+        part = (int)akey[i];
+        enc[i] = (char)((int)adata[i] + (step << 2) + (part >> 2));
+    }
+    enc[length] = '\0'; // Null-terminate the string
+    return enc;
 }
-////////////////////////////////// Decripta //////////////////////////////////
 /*
- astr:texto a ser descriptografado  (ate 36 bytes)
- akey:chave (ate 36 bytes)
- step: values 0x0000 ate 0xffff
+adata: message
+akey: private key
+step:integer
 */
-char *decode_node(char *astr ,char *akey ,long int step)
-{
-	int i=0;
-	for (i = 0 ;i<strlen(astr);++i )
-	{
-		dec[i]= (astr[i]) -   (step << 2  + akey[i] >> 2 ); 
-	}
-	return (dec);
+char* decode_node(const char* adata, const char* akey, int step) {
+    int i;
+    int part;
+    size_t length = strlen(adata);
+    char* enc = (char*)malloc(length + 1);
+    enc[0] = '\0'; // Initialize the string
+
+    for (i = 0; i < length; i++) {
+        part = (int)akey[i];
+        enc[i] = (char)((int)adata[i] - (step << 2) - (part >> 2));
+    }
+    enc[length] = '\0'; // Null-terminate the string
+    return enc;
 }
+
 ////////////////////////////////////////////////////////////////////
 
 /*
